@@ -8,7 +8,7 @@ import {
     ImageBackground
 } from 'react-native'
 import Foot from './src/common/footer'
-// import Search from './src/components/search';
+import Search from './src/components/search'
 import $ from './src/components/ShowIndex'
 
 export default class Space extends Component {
@@ -50,6 +50,7 @@ export default class Space extends Component {
                             alignItems: 'center'
                         }}
                     />
+                    <Search />
                     <$.ShowIndex />
                     <Foot />
                 </LinearGradient>

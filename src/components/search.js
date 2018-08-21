@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
         height: 30,
         borderWidth: 1,
         borderColor: '#ccc',
-        marginTop: 10
+        marginTop: 10,
+        alignItems: 'center'
     }
 })
