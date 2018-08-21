@@ -9,17 +9,17 @@ class ShowIndex extends Component {
         this.movieItem = []
     }
 
-    componentDidMount() {
-        this.showItem()
-    }
-
-    showItem(params) {
+    showItem() {
         axios.get(host + 'movie/top250').then(res => {
             console.warn(res.data.subjects, 'sssss')
             this.setState({
                 movieItem: (this.movieItem = res.data.subjects)
             })
         })
+    }
+
+    componentDidMount() {
+        this.showItem()
     }
 
     render() {
@@ -46,7 +46,6 @@ class ShowIndex extends Component {
 }
 export default {
     ShowIndex
-    // showItem
 }
 const styles = StyleSheet.create({
     showIndexWrap: {
