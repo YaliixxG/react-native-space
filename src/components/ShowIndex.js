@@ -1,50 +1,63 @@
-import React, {Component} from 'react';
-import {FlatList,StyleSheet,View,Text,TextInput} from 'react-native'
+import React, { Component } from 'react'
+import { FlatList, StyleSheet, View, Text, Image } from 'react-native'
 import axios from 'axios'
 
-
-const host = 'https://api.douban.com/v2/book/search?q='
-const search = (params)=> {
-    axios.get(host+params).then(res=>{
-        console.warn(res.data)
-        this.setState({
-            searchData: this.searchData = res.data
-        })
-    })
-}
- class ShowIndex extends Component{
-    constructor(props){
-    super(props)
-    this.searchData=[]
+const host = 'https://api.douban.com/v2/'
+class ShowIndex extends Component {
+    constructor(props) {
+        super(props)
+        this.movieItem = []
     }
 
-    render(){
-        return(            
-            <View style={styles.showIndexWrap}>
-            <FlatList
-          data={this.searchData}
-          renderItem={({item}) => <Text style={styles.item}>{item.title}</Text>}
-        />
-            </View>
+    componentDidMount() {
+        this.showItem()
+    }
 
+    showItem(params) {
+        axios.get(host + 'movie/top250').then(res => {
+            console.warn(res.data.subjects, 'sssss')
+            this.setState({
+                movieItem: (this.movieItem = res.data.subjects)
+            })
+        })
+    }
+
+    render() {
+        return (
+            <View>
+                <FlatList
+                    data={this.movieItem}
+                    renderItem={({ item }) => (
+                        <View style={styles.itemlist}>
+                            <Image
+                                source={{
+                                    uri: item.images.small,
+                                    width: 60,
+                                    height: 100
+                                }}
+                            />
+                            <Text style={styles.item}> {item.title} </Text>
+                        </View>
+                    )}
+                />
+            </View>
         )
     }
 }
 export default {
-    ShowIndex,
-    search
+    ShowIndex
+    // showItem
 }
 const styles = StyleSheet.create({
-    showIndexWrap:{
-        height:500,
-        borderWidth:1,
-        borderColor:'#ccc',
-        marginTop:30
-   },
-   showitemWrap:{
-       width:150,
-       height:100,
-       backgroundColor:'#f00',
-
-   }
+    showIndexWrap: {
+        height: 500,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        marginTop: 30
+    },
+    itemlist: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    }
 })
